@@ -1,0 +1,88 @@
+@import "../../colors/color.scss";
+.EmptyRoomsComponentStyles {
+  width: 95%;
+  max-height: 100%;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(191, 191, 191, 0.2),
+    0 0.375rem 0.625rem 0 rgba(191, 191, 191, 0.1);
+  background: $white;
+  background-image: radial-gradient($dot-bg 0.063rem, transparent 0);
+  background-size: 1.875rem 1.875rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container {
+    text-align: center;
+    .header {
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+  }
+}
+.RoomsComponentStyles {
+  width: 95%;
+  max-height: 100%;
+  .header {
+    height: 7%;
+    background-color: $white;
+    border-bottom: 0.063rem solid $gray-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .button-cont {
+    width: inherit;
+    height: 7%;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 2%;
+    align-items: center;
+  }
+  .rooms-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, max-content));
+    height: 65%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 0.313rem;
+    background-color: $secondary-bg;
+    padding: 5%;
+    justify-content: center;
+    column-gap: 2rem;
+    overflow: auto;
+    row-gap: 2rem;
+    .single-room {
+      height: 10rem;
+      width: 10rem;
+      background-color: $white;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      -moz-box-shadow: 0 0 3px #ccc;
+      -webkit-box-shadow: 0 0 3px #ccc;
+      box-shadow: 0 0 10px #ccc;
+      box-shadow: 0 0.25rem 0.5rem 0 rgba(191, 191, 191, 0.2),
+      0 0.375rem 0.625rem 0 rgba(191, 191, 191, 0.1);
+    background: $white;
+    background-image: radial-gradient($dot-bg 0.063rem, transparent 0);
+    background-size: 1rem 1rem;
+      .room-cont {
+        text-align: center;
+        .name {
+          font-weight: 500;
+          margin-bottom: 1rem;
+        }
+        .circle {
+          height: 3rem;
+          width: 3rem;
+          border-radius: 50%;
+          background-color: $table-selected-bg;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AppStyles.scss";
 import SideNavbar from "./components/SideNavbar/SideNavbar";
-import LeftComponent from "./components/LeftComponent/LeftComponent";
-import FloatingComponent from "./components/FloatingComponent/FloatingComponent";
+import { Provider } from "react-redux";
+import store from "./store";
+import AddRoomDialogComponent from "./components/DialogComponent/AddRoomDialogComponent";
+import ContentComponent from "./components/ContentComponent/ContentComponent";
 
 const App: React.FC = () => {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   return (
     <div className="App">
-      <SideNavbar />
-      <LeftComponent />
-      <FloatingComponent />
+      <Provider store={store}>
+        <SideNavbar />
+        <ContentComponent setIsModalVisible={setIsModalVisible} />
+        
+        {isModalVisible && <AddRoomDialogComponent setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible} />}
+      </Provider>
     </div>
   );
 };
