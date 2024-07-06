@@ -37,34 +37,101 @@
       .table-container {
         padding-top: 1.875rem;
         width: 100%;
-        text-align: center;
+
         .opt-header {
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           font-weight: 500;
           color: $header-color;
+          text-align: center;
         }
         .opt-sub-header {
-          font-size: 0.7rem;
+          font-size: 0.8rem;
           font-weight: 300;
           color: $subheader-color;
           margin-top: 0.313rem;
+          text-align: center;
         }
         .tables {
           margin-top: 1.25rem;
           display: flex;
           column-gap: 1.25rem;
           justify-content: center;
+          border-bottom: 0.063rem solid $gray-border;
+          padding-bottom: 15%;
+          margin-bottom: 1.875rem;
           img {
             height: 5.5rem;
             width: 5.5rem;
-            padding: 0.313rem;
+            padding: 0.4rem;
           }
-          img:hover {
+          .selected {
             background-color: $table-selected-bg;
             border: 0.063rem dashed $primary-border;
             border-radius: 0.5rem;
             cursor: pointer;
           }
+        }
+        .table-details {
+          padding-left: 10%;
+          padding-right: 10%;
+          border-bottom: 0.063rem solid $gray-border;
+          padding-bottom: 15%;
+          .form-container {
+            margin-top: 2rem;
+            .input-container {
+              display: flex;
+              width: 100%;
+              margin-top: 1rem;
+              align-items: center;
+              .label {
+                width: 50%;
+                font-size: 0.8rem;
+                font-weight: 300;
+                color: $subheader-color;
+              }
+              .input {
+                width: 50%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+              }
+            }
+          }
+        }
+        .advanced-details {
+          padding-left: 10%;
+          padding-right: 10%;
+          margin-top: 2rem;
+          .input-container {
+            display: flex;
+            width: 100%;
+            margin-top: 1rem;
+            align-items: center;
+            .label {
+              width: 60%;
+              font-size: 0.8rem;
+              font-weight: 400;
+              color: $black;
+            }
+            .input {
+              width: 40%;
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+              .icon {
+                color: $primary-red;
+                cursor: pointer;
+                height: 1.5rem;
+                width: 1.5rem;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .skeleton {
+          margin-top: 1rem;
+          display: grid;
+          row-gap: 0.625rem;
         }
       }
     }
@@ -102,9 +169,9 @@
 
           .button-add {
             background: linear-gradient(
-              54deg,
-              $gradient-dark 35%,
-              $gradient-light 60%
+              45deg,
+              $gradient-dark 30%,
+              $gradient-light 90%
             );
             text-transform: capitalize;
           }
