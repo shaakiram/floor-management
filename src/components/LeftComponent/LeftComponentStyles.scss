@@ -1,0 +1,135 @@
+@import "../../colors/color.scss";
+.LeftComponentStyles {
+  width: 95%;
+  max-height: 100%;
+  .header {
+    height: 7%;
+    background-color: $white;
+    border-bottom: 0.063rem solid $gray-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .main-component {
+    height: 91%;
+    display: flex;
+    width: 100%;
+    margin-top: 1%;
+
+    .table-component {
+      width: 20vw;
+      height: 100%;
+      border-right: 0.063rem solid $gray-border;
+      .tables-header {
+        height: 5vh;
+        display: flex;
+        border-bottom: 0.063rem solid $gray-border;
+        .header-container {
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.8rem;
+          font-weight: 500;
+          border-bottom: 0.094rem solid $primary-border;
+        }
+      }
+      .table-container {
+        padding-top: 1.875rem;
+        width: 100%;
+        text-align: center;
+        .opt-header {
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: $header-color;
+        }
+        .opt-sub-header {
+          font-size: 0.7rem;
+          font-weight: 300;
+          color: $subheader-color;
+          margin-top: 0.313rem;
+        }
+        .tables {
+          margin-top: 1.25rem;
+          display: flex;
+          column-gap: 1.25rem;
+          justify-content: center;
+          img {
+            height: 5.5rem;
+            width: 5.5rem;
+            padding: 0.313rem;
+          }
+          img:hover {
+            background-color: $table-selected-bg;
+            border: 0.063rem dashed $primary-border;
+            border-radius: 0.5rem;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .room-component {
+      width: 80vw;
+      height: 100%;
+      background-color: $secondary-bg;
+      .room-header {
+        background-color: $white;
+        height: 5vh;
+        display: flex;
+        border-bottom: 0.063rem solid $gray-border;
+        .header-container {
+          width: 50%;
+          display: flex;
+          align-items: center;
+          font-size: 0.8rem;
+          font-weight: 500;
+          .header-room {
+            height: 100%;
+            width: 20%;
+            margin-left: 4%;
+            border-bottom: 0.094rem solid $primary-border;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+        .button-container {
+          width: 48%;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          padding-right: 2%;
+
+          .button-add {
+            background: linear-gradient(
+              54deg,
+              $gradient-dark 35%,
+              $gradient-light 60%
+            );
+            text-transform: capitalize;
+          }
+          .button-save {
+            color: $secondary-btn-text;
+            border-color: $secondary-btn-border;
+            text-transform: capitalize;
+          }
+        }
+      }
+      .room-area {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        height: 88%;
+
+        margin-left: 2%;
+        margin-right: 2%;
+        border-bottom-left-radius: 0.313rem;
+        border-bottom-right-radius: 0.313rem;
+        box-shadow: 0 0.25rem 0.5rem 0 rgba(191, 191, 191, 0.2),
+          0 0.375rem 0.625rem 0 rgba(191, 191, 191, 0.1);
+        background: $white;
+        background-image: radial-gradient($dot-bg 0.063rem, transparent 0);
+        background-size: 1.875rem 1.875rem;
+      }
+    }
+  }
+}
