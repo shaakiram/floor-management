@@ -40,7 +40,7 @@ export default NumberInput;
 
 
 const StyledInputRoot = styled("div")(
-  ({  }) => `
+  () => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 400;
   color: #000;
@@ -52,7 +52,7 @@ const StyledInputRoot = styled("div")(
 );
 
 const StyledInput = styled("input")(
-  ({  }) => `
+  () => `
   font-size: 0.875rem;
   font-family: inherit;
   font-weight: 400;
@@ -76,7 +76,7 @@ const StyledInput = styled("input")(
 );
 
 const StyledButton = styled("button")(
-  ({  }) => `
+  () => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
