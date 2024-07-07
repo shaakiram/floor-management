@@ -8,9 +8,11 @@ import { RootState } from "../../store";
 import { setSelectedRoom } from "../../features/floorSlice/floorSlice";
 interface RoomsComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setNavigateFrom: React.Dispatch<React.SetStateAction<string>>;
 }
 const RoomsComponent: React.FC<RoomsComponentProps> = ({
   setIsModalVisible,
+  setNavigateFrom,
 }) => {
   const dispatch = useDispatch();
   const roomList = useSelector((state: RootState) => state.floor.rooms);
@@ -25,7 +27,10 @@ const RoomsComponent: React.FC<RoomsComponentProps> = ({
       <div className="header">Rooms Managment</div>
       <div className="button-cont">
         <PrimaryButton
-          onClick={() => setIsModalVisible(true)}
+          onClick={() => {
+            setNavigateFrom("HOME");
+            setIsModalVisible(true);
+          }}
           icon
           buttonText="Add Room"
         />

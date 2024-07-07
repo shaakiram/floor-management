@@ -50,7 +50,8 @@ const floorSlice = createSlice({
     saveSelectedRoom(state, action: PayloadAction<Table[]>) {
       if (state.selectedRoom) {
         state.selectedRoom.tables = action.payload;
-        const updatedRooms = state.rooms.map((room) =>
+        const roomsList = JSON.parse(localStorage.getItem("rooms") || "[]");
+        const updatedRooms = roomsList.map((room: Room) =>
           room.roomId === state.selectedRoom?.roomId ? state.selectedRoom : room
         );
         localStorage.setItem("rooms", JSON.stringify(updatedRooms));
@@ -108,14 +109,22 @@ const floorSlice = createSlice({
           (table) => table.tableId !== state.selectedTable?.tableId
         );
         state.selectedTable = null;
-        localStorage.setItem("rooms", JSON.stringify(state.rooms));
+        const roomsList = JSON.parse(localStorage.getItem("rooms") || "[]");
+        const updatedRooms = roomsList.map((room: Room) =>
+          room.roomId === state.selectedRoom?.roomId ? state.selectedRoom : room
+        );
+        localStorage.setItem("rooms", JSON.stringify(updatedRooms));
       }
     },
     duplicateSelectedTable(state) {
       if (state.selectedTable && state.selectedRoom) {
         const duplicatedTable = { ...state.selectedTable, tableId: uuidv4() };
         state.selectedRoom.tables.push(duplicatedTable);
-        localStorage.setItem("rooms", JSON.stringify(state.rooms));
+        const roomsList = JSON.parse(localStorage.getItem("rooms") || "[]");
+        const updatedRooms = roomsList.map((room: Room) =>
+          room.roomId === state.selectedRoom?.roomId ? state.selectedRoom : room
+        );
+        localStorage.setItem("rooms", JSON.stringify(updatedRooms));
       }
     },
   },

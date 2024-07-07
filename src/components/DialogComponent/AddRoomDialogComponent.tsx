@@ -8,7 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import { Room } from "../../types/types";
 import { useDispatch } from "react-redux";
-import { addRoom } from "../../features/floorSlice/floorSlice";
+import { addRoom, setSelectedRoom } from "../../features/floorSlice/floorSlice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -73,10 +73,12 @@ interface RoomFormValues {
 interface AddRoomDialogComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isModalVisible: boolean;
+  navigateFrom: string;
 }
 const AddRoomDialogComponent: React.FC<AddRoomDialogComponentProps> = ({
   setIsModalVisible,
   isModalVisible,
+  navigateFrom,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -94,6 +96,9 @@ const AddRoomDialogComponent: React.FC<AddRoomDialogComponentProps> = ({
       tables: [],
     };
     dispatch(addRoom(room));
+    if (navigateFrom === "TABLE") {
+      dispatch(setSelectedRoom(room));
+    }
     handleClose();
   };
   const validateForm = (values: RoomFormValues) => {

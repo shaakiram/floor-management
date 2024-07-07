@@ -76,7 +76,6 @@ const DialogComponent: React.FC = () => {
           >
             OK
           </Button>
-          <PrimaryButton onClick={handleClose} icon  buttonText="Add Room"/>
         </DialogActions>
       </Box>
     </Modal>

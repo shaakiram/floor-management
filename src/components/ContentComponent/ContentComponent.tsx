@@ -7,9 +7,12 @@ import { RootState } from "../../store";
 import RoomsComponent from "../RoomsComponent/RoomsComponent";
 interface ContentComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setNavigateFrom: React.Dispatch<React.SetStateAction<string>>;
+
 }
 const ContentComponent: React.FC<ContentComponentProps> = ({
   setIsModalVisible,
+  setNavigateFrom
 }) => {
   const selectedRoom = useSelector(
     (state: RootState) => state.floor.selectedRoom
@@ -20,15 +23,15 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     <React.Fragment>
       {rooms.length > 0 ? (
         selectedRoom === null ? (
-          <RoomsComponent setIsModalVisible={setIsModalVisible}/>
+          <RoomsComponent setIsModalVisible={setIsModalVisible} setNavigateFrom={setNavigateFrom}/>
         ) : (
           <React.Fragment>
-            <LeftComponent setIsModalVisible={setIsModalVisible} />
+            <LeftComponent setIsModalVisible={setIsModalVisible} setNavigateFrom={setNavigateFrom}/>
             <FloatingComponent />
           </React.Fragment>
         )
       ) : (
-        <EmptyRoomsComponent setIsModalVisible={setIsModalVisible} />
+        <EmptyRoomsComponent setIsModalVisible={setIsModalVisible} setNavigateFrom={setNavigateFrom}/>
       )}
     </React.Fragment>
   );

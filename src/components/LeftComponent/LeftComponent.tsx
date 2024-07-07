@@ -27,13 +27,17 @@ import {
   setSelectedRoom,
 } from "../../features/floorSlice/floorSlice";
 import TableDetailsComponent from "./TableDetailsComponent/TableDetailsCompoent";
-import ActionContainerComponent from "../ActionContainerComponent/ActionContainerComponent";
+import ActionContainerComponent from "../ActionContainer/ActionContainerComponent";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 interface LeftComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setNavigateFrom: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
+const LeftComponent: React.FC<LeftComponentProps> = ({
+  setIsModalVisible,
+  setNavigateFrom,
+}) => {
   const [exceedLimit, setExceedLimit] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -160,7 +164,10 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
                 <div className="button-container">
                   <Stack direction="row" spacing={2}>
                     <PrimaryButton
-                      onClick={() => setIsModalVisible(true)}
+                      onClick={() => {
+                        setNavigateFrom("TABLE");
+                        setIsModalVisible(true);
+                      }}
                       icon
                       buttonText="Add Room"
                     />

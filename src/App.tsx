@@ -8,13 +8,23 @@ import ContentComponent from "./components/ContentComponent/ContentComponent";
 
 const App: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [navigateFrom, setNavigateFrom] = useState<string>("HOME");
   return (
     <div className="App">
       <Provider store={store}>
         <SideNavbar />
-        <ContentComponent setIsModalVisible={setIsModalVisible} />
-        
-        {isModalVisible && <AddRoomDialogComponent setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible} />}
+        <ContentComponent
+          setIsModalVisible={setIsModalVisible}
+          setNavigateFrom={setNavigateFrom}
+        />
+
+        {isModalVisible && (
+          <AddRoomDialogComponent
+            setIsModalVisible={setIsModalVisible}
+            isModalVisible={isModalVisible}
+            navigateFrom={navigateFrom}
+          />
+        )}
       </Provider>
     </div>
   );
