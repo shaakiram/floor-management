@@ -1,7 +1,7 @@
 
 ### `npm i`
 
-to install exteral libraries
+to install external libraries
 
 ### `npm start`
 
