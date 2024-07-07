@@ -61,7 +61,9 @@ const TableDetailsComponent: React.FC<TableDetailsComponentProps> = ({
   return (
     <React.Fragment>
       <div className="table-details">
-        <div className="opt-header">Table Details</div>
+        <div className="opt-header">
+          Table {selectedTableLayout ? "Layout" : ""} Details
+        </div>
         <div className="form-container">
           <div className="input-container">
             <div className="label">Table Name</div>

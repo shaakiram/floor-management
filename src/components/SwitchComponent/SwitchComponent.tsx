@@ -80,6 +80,7 @@ const SwitchComponent: React.FC = () => {
     (state: RootState) => state.floor.selectedTableLayout
   );
   const classes = useStyles();
+  console.log(selectedTableLayout);
   return (
     <FormControlLabel
       control={

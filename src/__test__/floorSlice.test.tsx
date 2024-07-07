@@ -1,3 +1,4 @@
+import { tables } from "../data/tables";
 import reducer, {
   addRoom,
   deleteRoom,
@@ -14,6 +15,13 @@ import reducer, {
   RoomsState,
   setTablesToSelectedRoom,
   saveSelectedRoom,
+  addTableLayout,
+  removeTableLayout,
+  setSelectedTableLayout,
+  setOnlineStateTableLayout,
+  setSelectedTableNameTableLayout,
+  setSelectedMincoversTableLayout,
+  setSelectedMaxcoversTableLayout,
 } from "../features/floorSlice/floorSlice";
 import { Room, Table } from "../types/types";
 import { v4 as uuidv4 } from "uuid";
@@ -38,13 +46,14 @@ describe("floorSlice reducer", () => {
     selectedRoom: null,
     selectedTable: null,
     selectedTableLayout: null,
-    tableLayout: [],
+    tableLayout: tables,
   };
 
   it("should return the initial state", () => {
     expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);
   });
 
+  //room test cases
   it("should handle addRoom", () => {
     const newRoom: Room = { roomId: "1", roomName: "Room 1", tables: [] };
     const nextState = reducer(initialState, addRoom(newRoom));
@@ -150,6 +159,8 @@ describe("floorSlice reducer", () => {
       JSON.stringify([])
     );
   });
+
+  //table test cases
 
   it("should handle setSelectedTable", () => {
     const newTable: Table = {
@@ -467,5 +478,184 @@ describe("floorSlice reducer", () => {
       "rooms",
       JSON.stringify([])
     );
+  });
+  it("should handle addTableLayout", () => {
+    const newTableLayout: Table = {
+      tableId: "1",
+      tableName: "Layout 1",
+      onlineStatus: false,
+      minCovers: 1,
+      maxCovers: 4,
+      rotation: 0,
+      tableType: "ROUND",
+    };
+    const nextState = reducer(initialState, addTableLayout(newTableLayout));
+    expect(nextState.tableLayout).toEqual([...tables, newTableLayout]);
+  });
+
+  it("should handle removeTableLayout", () => {
+    const state: RoomsState = {
+      rooms: [],
+      selectedRoom: null,
+      selectedTable: null,
+      selectedTableLayout: null,
+      tableLayout: [
+        {
+          tableId: "1",
+          tableName: "Layout 1",
+          onlineStatus: false,
+          minCovers: 1,
+          maxCovers: 4,
+          rotation: 0,
+          tableType: "ROUND",
+        },
+      ],
+    };
+    const nextState = reducer(state, removeTableLayout(0));
+    expect(nextState.tableLayout).toEqual([]);
+  });
+
+  it("should handle setSelectedTableLayout", () => {
+    const newTableLayout: Table = {
+      tableId: "1",
+      tableName: "Layout 1",
+      onlineStatus: false,
+      minCovers: 1,
+      maxCovers: 4,
+      rotation: 0,
+      tableType: "ROUND",
+    };
+    const nextState = reducer(
+      initialState,
+      setSelectedTableLayout(newTableLayout)
+    );
+    expect(nextState.selectedTableLayout).toEqual(newTableLayout);
+  });
+
+  it("should handle setOnlineStateTableLayout", () => {
+    const state: RoomsState = {
+      rooms: [],
+      selectedRoom: null,
+      selectedTable: null,
+      selectedTableLayout: {
+        tableId: "1",
+        tableName: "Layout 1",
+        onlineStatus: false,
+        minCovers: 1,
+        maxCovers: 4,
+        rotation: 0,
+        tableType: "ROUND",
+      },
+      tableLayout: [
+        {
+          tableId: "1",
+          tableName: "Layout 1",
+          onlineStatus: false,
+          minCovers: 1,
+          maxCovers: 4,
+          rotation: 0,
+          tableType: "ROUND",
+        },
+      ],
+    };
+    const nextState = reducer(state, setOnlineStateTableLayout(true));
+    expect(nextState.selectedTableLayout?.onlineStatus).toEqual(true);
+    expect(nextState.tableLayout[0].onlineStatus).toEqual(true);
+  });
+
+  it("should handle setSelectedTableNameTableLayout", () => {
+    const state: RoomsState = {
+      rooms: [],
+      selectedRoom: null,
+      selectedTable: null,
+      selectedTableLayout: {
+        tableId: "1",
+        tableName: "Layout 1",
+        onlineStatus: false,
+        minCovers: 1,
+        maxCovers: 4,
+        rotation: 0,
+        tableType: "ROUND",
+      },
+      tableLayout: [
+        {
+          tableId: "1",
+          tableName: "Layout 1",
+          onlineStatus: false,
+          minCovers: 1,
+          maxCovers: 4,
+          rotation: 0,
+          tableType: "ROUND",
+        },
+      ],
+    };
+    const nextState = reducer(
+      state,
+      setSelectedTableNameTableLayout("New Layout Name")
+    );
+    expect(nextState.selectedTableLayout?.tableName).toEqual("New Layout Name");
+    expect(nextState.tableLayout[0].tableName).toEqual("New Layout Name");
+  });
+
+  it("should handle setSelectedMincoversTableLayout", () => {
+    const state: RoomsState = {
+      rooms: [],
+      selectedRoom: null,
+      selectedTable: null,
+      selectedTableLayout: {
+        tableId: "1",
+        tableName: "Layout 1",
+        onlineStatus: false,
+        minCovers: 1,
+        maxCovers: 4,
+        rotation: 0,
+        tableType: "ROUND",
+      },
+      tableLayout: [
+        {
+          tableId: "1",
+          tableName: "Layout 1",
+          onlineStatus: false,
+          minCovers: 1,
+          maxCovers: 4,
+          rotation: 0,
+          tableType: "ROUND",
+        },
+      ],
+    };
+    const nextState = reducer(state, setSelectedMincoversTableLayout(2));
+    expect(nextState.selectedTableLayout?.minCovers).toEqual(2);
+    expect(nextState.tableLayout[0].minCovers).toEqual(2);
+  });
+
+  it("should handle setSelectedMaxcoversTableLayout", () => {
+    const state: RoomsState = {
+      rooms: [],
+      selectedRoom: null,
+      selectedTable: null,
+      selectedTableLayout: {
+        tableId: "1",
+        tableName: "Layout 1",
+        onlineStatus: false,
+        minCovers: 1,
+        maxCovers: 4,
+        rotation: 0,
+        tableType: "ROUND",
+      },
+      tableLayout: [
+        {
+          tableId: "1",
+          tableName: "Layout 1",
+          onlineStatus: false,
+          minCovers: 1,
+          maxCovers: 4,
+          rotation: 0,
+          tableType: "ROUND",
+        },
+      ],
+    };
+    const nextState = reducer(state, setSelectedMaxcoversTableLayout(5));
+    expect(nextState.selectedTableLayout?.maxCovers).toEqual(5);
+    expect(nextState.tableLayout[0].maxCovers).toEqual(5);
   });
 });

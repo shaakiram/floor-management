@@ -106,7 +106,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
     ) {
       if (selectedRoomTables.length < 15) {
         const add = selectionTables[source.index];
-        console.log(add,"selectedRoom");
+        console.log(add, "selectedRoom");
         //remove table from drag table container
         dispatch(removeTableLayout(source.index));
         //adding table to the room
@@ -188,9 +188,13 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                     </div>
                   )}
                 </Droppable>
-                <TableDetailsComponent
-                  setTableSaveSuccess={setTableSaveSuccess}
-                />
+                {selectedTable || selectedTableLayout ? (
+                  <TableDetailsComponent
+                    setTableSaveSuccess={setTableSaveSuccess}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="room-component">
@@ -269,7 +273,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                                       : ""
                                   }
                                   onClick={() => {
-                                    console.log(table,"table");
+                                    console.log(table, "table");
                                     dispatch(setSelectedTableLayout(null));
                                     dispatch(setSelectedTable(table));
                                   }}
