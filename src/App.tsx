@@ -1,31 +1,17 @@
-import React, { useState } from "react";
-import "./AppStyles.scss";
-import SideNavbar from "./components/SideNavbar/SideNavbar";
-import { Provider } from "react-redux";
-import store from "./store";
-import AddRoomDialogComponent from "./components/DialogComponent/AddRoomDialogComponent";
-import ContentComponent from "./components/ContentComponent/ContentComponent";
+import React from "react";
+import RoomPage from "./components/Pages/RoomPage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HomePage from "./components/Pages/HomePage";
 
 const App: React.FC = () => {
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [navigateFrom, setNavigateFrom] = useState<string>("HOME");
   return (
-    <div className="App">
-      <Provider store={store}>
-        <SideNavbar />
-        <ContentComponent
-          setIsModalVisible={setIsModalVisible}
-          setNavigateFrom={setNavigateFrom}
-        />
-
-        {isModalVisible && (
-          <AddRoomDialogComponent
-            setIsModalVisible={setIsModalVisible}
-            isModalVisible={isModalVisible}
-            navigateFrom={navigateFrom}
-          />
-        )}
-      </Provider>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<RoomPage />} />
+          <Route path="/home" element={<HomePage />} />
+        </Routes>
+      </Router>
     </div>
   );
 };

@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import { Box, Modal } from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 import { makeStyles } from "@material-ui/styles";
-import PrimaryButton from "../Button/PrimaryButton";
 
 const style = {
   position: "absolute" as "absolute",
