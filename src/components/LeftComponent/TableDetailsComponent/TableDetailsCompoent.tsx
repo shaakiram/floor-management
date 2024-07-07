@@ -16,7 +16,6 @@ import { makeStyles } from "@material-ui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
 
-
 const useStyles = makeStyles({
   root: {
     // focused color for input with variant='outlined'
@@ -37,7 +36,12 @@ const useStyles = makeStyles({
     },
   },
 });
-const TableDetailsComponent: React.FC = () => {
+interface TableDetailsComponentProps {
+  setTableSaveSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const TableDetailsComponent: React.FC<TableDetailsComponentProps> = ({
+  setTableSaveSuccess,
+}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -126,7 +130,8 @@ const TableDetailsComponent: React.FC = () => {
           variant="outlined"
           className="button-save"
           onClick={() => {
-              dispatch(updateTableDetails());
+            dispatch(updateTableDetails());
+            setTableSaveSuccess(true);
           }}
         >
           Save Table

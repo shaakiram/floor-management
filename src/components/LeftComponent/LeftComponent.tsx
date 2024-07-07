@@ -29,6 +29,7 @@ import {
 import TableDetailsComponent from "./TableDetailsComponent/TableDetailsCompoent";
 import ActionContainerComponent from "../ActionContainer/ActionContainerComponent";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
+import AlertComponent from "../AlertComponent/AlertComponent";
 interface LeftComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setNavigateFrom: React.Dispatch<React.SetStateAction<string>>;
@@ -39,6 +40,8 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
   setNavigateFrom,
 }) => {
   const [exceedLimit, setExceedLimit] = useState<boolean>(false);
+  const [roomSaveSuccess, setRoomSaveSuccess] = useState<boolean>(false);
+  const [tableSaveSuccess, setTableSaveSuccess] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const selectedTable = useSelector(
@@ -154,7 +157,11 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                     </div>
                   )}
                 </Droppable>
-                {selectedTable && <TableDetailsComponent />}
+                {selectedTable && (
+                  <TableDetailsComponent
+                    setTableSaveSuccess={setTableSaveSuccess}
+                  />
+                )}
               </div>
             </div>
             <div className="room-component">
@@ -179,6 +186,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                       onClick={() => {
                         if (selectedRoom) {
                           dispatch(saveSelectedRoom(selectedRoom.tables));
+                          setRoomSaveSuccess(true);
                         }
                       }}
                     >
@@ -215,7 +223,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                                     setExceedLimit={setExceedLimit}
                                   />
                                 )}
-                    
+
                                 <img
                                   alt=""
                                   src={
@@ -253,6 +261,18 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
         </div>
       </DragDropContext>
       {exceedLimit && <DialogComponent />}
+      {tableSaveSuccess && (
+        <AlertComponent
+          alertText={`Successfully ${selectedTable?.tableName} Table Saved !`}
+          setClose={setTableSaveSuccess}
+        />
+      )}
+      {roomSaveSuccess && (
+        <AlertComponent
+          alertText={`Successfully ${selectedRoom?.roomName} Room Saved !`}
+          setClose={setRoomSaveSuccess}
+        />
+      )}
     </React.Fragment>
   );
 };
