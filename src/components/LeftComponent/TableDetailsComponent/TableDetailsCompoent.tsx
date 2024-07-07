@@ -44,9 +44,6 @@ const TableDetailsComponent: React.FC = () => {
   const selectedTable = useSelector(
     (state: RootState) => state.floor.selectedTable
   );
-  const selectedRoom = useSelector(
-    (state: RootState) => state.floor.selectedRoom
-  );
   return (
     <React.Fragment>
       <div className="table-details">
