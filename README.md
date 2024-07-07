@@ -1,7 +1,7 @@
 
 ### `npm i`
 
-to insatll exteral libraries
+to install exteral libraries
 
 ### `npm start`
 
