@@ -127,6 +127,23 @@ const floorSlice = createSlice({
         localStorage.setItem("rooms", JSON.stringify(updatedRooms));
       }
     },
+    rotateTable(state, action: PayloadAction<Table[]>) {
+      if (state.selectedTable && state.selectedRoom) {
+        state.selectedTable.rotation =
+          (state.selectedTable.rotation + 90) % 360;
+        const updatedTables = action.payload.map((table) =>
+          table.tableId === state.selectedTable?.tableId
+            ? state.selectedTable
+            : table
+        );
+        state.selectedRoom.tables = updatedTables;
+        const roomsList = JSON.parse(localStorage.getItem("rooms") || "[]");
+        const updatedRooms = roomsList.map((room: Room) =>
+          room.roomId === state.selectedRoom?.roomId ? state.selectedRoom : room
+        );
+        localStorage.setItem("rooms", JSON.stringify(updatedRooms));
+      }
+    },
   },
 });
 
@@ -145,5 +162,6 @@ export const {
   deleteSelectedTable,
   duplicateSelectedTable,
   deleteRoom,
+  rotateTable,
 } = floorSlice.actions;
 export default floorSlice.reducer;

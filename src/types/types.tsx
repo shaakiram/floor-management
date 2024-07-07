@@ -5,6 +5,7 @@ export interface Table {
   maxCovers: number;
   onlineStatus: boolean;
   tableType: "SQUARE" | "ROUND";
+  rotation: number;
 }
 export interface Room {
   roomId: string;

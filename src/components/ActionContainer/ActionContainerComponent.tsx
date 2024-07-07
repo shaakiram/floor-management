@@ -1,13 +1,14 @@
 import React from "react";
 import "./ActionContainerComponentStyles.scss";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
-import PanoramaFishEyeRoundedIcon from "@mui/icons-material/PanoramaFishEyeRounded";
+import RotateRightRoundedIcon from "@mui/icons-material/RotateRightRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import {
   deleteSelectedTable,
   duplicateSelectedTable,
+  rotateTable,
 } from "../../features/floorSlice/floorSlice";
 
 interface ActionContainerComponentProps {
@@ -23,8 +24,15 @@ const ActionContainerComponent: React.FC<ActionContainerComponentProps> = ({
 
   return (
     <div className="ActionContainerComponent">
-      <div className="div">
-        <PanoramaFishEyeRoundedIcon fontSize="small" />
+      <div
+        className="div"
+        onClick={() => {
+          if (selectedRoom) {
+            dispatch(rotateTable(selectedRoom.tables));
+          }
+        }}
+      >
+        <RotateRightRoundedIcon fontSize="small" />
       </div>
       <div
         className="div"

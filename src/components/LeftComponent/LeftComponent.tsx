@@ -76,6 +76,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
       maxCovers: 0,
       onlineStatus: false,
       tableType: "SQUARE",
+      rotation: 0,
     };
     if (
       destination.droppableId === "RoomTables" &&
@@ -214,6 +215,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                                     setExceedLimit={setExceedLimit}
                                   />
                                 )}
+                    
                                 <img
                                   alt=""
                                   src={
@@ -231,6 +233,9 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                                   }
                                   onClick={() => {
                                     dispatch(setSelectedTable(table));
+                                  }}
+                                  style={{
+                                    transform: `rotate(${table?.rotation}deg)`,
                                   }}
                                 />
                               </div>

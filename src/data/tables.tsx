@@ -8,6 +8,7 @@ export const tables: Table[] = [
     maxCovers: 0,
     onlineStatus: false,
     tableType: "SQUARE",
+    rotation: 0,
   },
   {
     tableId: uuidv4(),
@@ -16,5 +17,6 @@ export const tables: Table[] = [
     maxCovers: 0,
     onlineStatus: false,
     tableType: "ROUND",
+    rotation: 0,
   },
 ];
