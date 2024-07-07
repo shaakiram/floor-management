@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tableReducer from "../features/tableSlice/tableSlice";
-import roomsReducer from"../features/roomSlice/roomSlice"
+import floorReducer from"../features/floorSlice/floorSlice"
 
 const store = configureStore({
   reducer: {
-    table: tableReducer,
-    rooms: roomsReducer,
+    floor: floorReducer,
   },
 });
 

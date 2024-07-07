@@ -8,7 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import { Room } from "../../types/types";
 import { useDispatch } from "react-redux";
-import { addRoom } from "../../features/roomSlice/roomSlice";
+import { addRoom } from "../../features/floorSlice/floorSlice";
 
 const style = {
   position: "absolute" as "absolute",

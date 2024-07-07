@@ -4,7 +4,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch, { SwitchProps } from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { setOnlineState } from "../../features/tableSlice/tableSlice";
+import { setOnlineState } from "../../features/floorSlice/floorSlice";
 import { makeStyles } from "@material-ui/styles";
 const IOSSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -65,7 +65,7 @@ const useStyles = makeStyles({
 const SwitchComponent: React.FC = () => {
   const dispatch = useDispatch();
   const selectedTable = useSelector(
-    (state: RootState) => state.table.selectedTable
+    (state: RootState) => state.floor.selectedTable
   );
   const classes = useStyles();
   return (
@@ -75,15 +75,17 @@ const SwitchComponent: React.FC = () => {
           sx={{ m: 1 }}
           defaultChecked={false}
           onChange={() => {
-            dispatch(setOnlineState(!selectedTable.onlineStatus));
+            dispatch(setOnlineState(!selectedTable?.onlineStatus));
           }}
-          checked={selectedTable.onlineStatus}
+          checked={selectedTable?.onlineStatus}
         />
       }
-      label={selectedTable.onlineStatus ? "Active" : "Inactive"}
+      label={selectedTable?.onlineStatus ? "Active" : "Inactive"}
       labelPlacement="start"
       className={
-        selectedTable.onlineStatus ? classes.labelActive : classes.labelInactive
+        selectedTable?.onlineStatus
+          ? classes.labelActive
+          : classes.labelInactive
       }
     />
   );

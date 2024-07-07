@@ -12,7 +12,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
   setIsModalVisible,
 }) => {
   const selectedRoom = useSelector(
-    (state: RootState) => state.rooms.selectedRoom
+    (state: RootState) => state.floor.selectedRoom
   );
   const roomsData = localStorage.getItem("rooms");
   const rooms = roomsData ? JSON.parse(roomsData) : [];

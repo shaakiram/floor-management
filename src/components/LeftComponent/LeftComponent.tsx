@@ -13,12 +13,6 @@ import Skeleton from "@mui/material/Skeleton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setSelectedMaxcovers,
-  setSelectedMincovers,
-  setSelectedTable,
-  setSelectedTableName,
-} from "../../features/tableSlice/tableSlice";
 import { RootState } from "../../store";
 import { tables } from "../../data/tables";
 import {
@@ -31,7 +25,15 @@ import { Table } from "../../types/types";
 import { v4 as uuidv4 } from "uuid";
 import DialogComponent from "../DialogComponent/DialogComponent";
 import PrimaryButton from "../Button/PrimaryButton";
-import { setTablesToSelectedRoom } from "../../features/roomSlice/roomSlice";
+import {
+  setSelectedMaxcovers,
+  setSelectedMincovers,
+  setSelectedTable,
+  setSelectedTableName,
+  setTablesToSelectedRoom,
+  saveSelectedRoom,
+  updateTableDetails,
+} from "../../features/floorSlice/floorSlice";
 const useStyles = makeStyles({
   root: {
     // focused color for input with variant='outlined'
@@ -64,10 +66,10 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
 
   const dispatch = useDispatch();
   const selectedTable = useSelector(
-    (state: RootState) => state.table.selectedTable
+    (state: RootState) => state.floor.selectedTable
   );
   const selectedRoom = useSelector(
-    (state: RootState) => state.rooms.selectedRoom
+    (state: RootState) => state.floor.selectedRoom
   );
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -147,14 +149,6 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
                                     ? sqrTable
                                     : rndTable
                                 }
-                                className={
-                                  selectedTable.tableId === table.tableId
-                                    ? "selected"
-                                    : ""
-                                }
-                                onClick={() => {
-                                  dispatch(setSelectedTable(table));
-                                }}
                                 {...provided.dragHandleProps}
                                 {...provided.draggableProps}
                                 ref={provided.innerRef}
@@ -167,91 +161,102 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
                     </div>
                   )}
                 </Droppable>
+                {selectedTable && (
+                  <React.Fragment>
+                    <div className="table-details">
+                      <div className="opt-header">Table Details</div>
+                      <div className="form-container">
+                        <div className="input-container">
+                          <div className="label">Table Name</div>
+                          <div className="input">
+                            <TextField
+                              className={classes.root}
+                              size="small"
+                              value={selectedTable.tableName}
+                              onChange={(e) => {
+                                dispatch(setSelectedTableName(e.target.value));
+                              }}
+                            />
+                          </div>
+                        </div>
 
-                <div className="table-details">
-                  <div className="opt-header">Table Details</div>
-                  <div className="form-container">
-                    <div className="input-container">
-                      <div className="label">Table Name</div>
-                      <div className="input">
-                        <TextField
-                          className={classes.root}
-                          size="small"
-                          value={selectedTable.tableName}
-                          onChange={(e) => {
-                            dispatch(setSelectedTableName(e.target.value));
-                          }}
-                        />
+                        <div className="input-container">
+                          <div className="label">Min Covers</div>
+                          <div className="input">
+                            <NumberInput
+                              value={selectedTable.minCovers}
+                              onChange={(e, val) => {
+                                dispatch(setSelectedMincovers(val || 0));
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div className="input-container">
+                          <div className="label">Max Covers</div>
+                          <div className="input">
+                            <NumberInput
+                              value={selectedTable.maxCovers}
+                              onChange={(e, val) => {
+                                dispatch(setSelectedMaxcovers(val || 0));
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div className="input-container">
+                          <div className="label">Online</div>
+                          <div className="input">
+                            <SwitchComponent />
+                          </div>
+                        </div>
                       </div>
                     </div>
-
-                    <div className="input-container">
-                      <div className="label">Min Covers</div>
-                      <div className="input">
-                        <NumberInput
-                          value={selectedTable.minCovers}
-                          onChange={(e, val) => {
-                            dispatch(setSelectedMincovers(val || 0));
-                          }}
-                        />
+                    <div className="advanced-details">
+                      <div className="input-container">
+                        <div className="label">Advanced Settings</div>
+                        <div className="input">
+                          {loading ? (
+                            <ExpandLessIcon
+                              className="icon"
+                              onClick={() => {
+                                setLoading(!loading);
+                              }}
+                            />
+                          ) : (
+                            <KeyboardArrowDownIcon
+                              className="icon"
+                              onClick={() => {
+                                setLoading(!loading);
+                              }}
+                            />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="input-container">
-                      <div className="label">Max Covers</div>
-                      <div className="input">
-                        <NumberInput
-                          value={selectedTable.maxCovers}
-                          onChange={(e, val) => {
-                            dispatch(setSelectedMaxcovers(val || 0));
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div className="input-container">
-                      <div className="label">Online</div>
-                      <div className="input">
-                        <SwitchComponent />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="advanced-details">
-                  <div className="input-container">
-                    <div className="label">Advanced Settings</div>
-                    <div className="input">
-                      {loading ? (
-                        <ExpandLessIcon
-                          className="icon"
-                          onClick={() => {
-                            setLoading(!loading);
-                          }}
-                        />
-                      ) : (
-                        <KeyboardArrowDownIcon
-                          className="icon"
-                          onClick={() => {
-                            setLoading(!loading);
-                          }}
-                        />
+                      {loading && (
+                        <div className="skeleton">
+                          <Skeleton
+                            variant="rectangular"
+                            width={210}
+                            animation="wave"
+                          />
+                        </div>
                       )}
                     </div>
-                  </div>
-                  {loading && (
-                    <div className="skeleton">
-                      <Skeleton
-                        variant="rectangular"
-                        width={210}
-                        animation="wave"
-                      />
-                      <Skeleton
-                        variant="rectangular"
-                        width={210}
-                        height={58}
-                        animation="wave"
-                      />
+                    <div className="btn-cont">
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        className="button-save"
+                        onClick={() => {
+                          if (selectedRoom) {
+                            dispatch(updateTableDetails(selectedRoom.tables));
+                          }
+                        }}
+                      >
+                        Save Table
+                      </Button>
                     </div>
-                  )}
-                </div>
+                  </React.Fragment>
+                )}
               </div>
             </div>
             <div className="room-component">
@@ -270,6 +275,11 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
                       size="small"
                       variant="outlined"
                       className="button-save"
+                      onClick={() => {
+                        if (selectedRoom) {
+                          dispatch(saveSelectedRoom(selectedRoom.tables));
+                        }
+                      }}
                     >
                       Save Room
                     </Button>
@@ -300,7 +310,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
                                 {...provided.draggableProps}
                                 ref={provided.innerRef}
                                 className={
-                                  selectedTable.tableId === table.tableId
+                                  selectedTable?.tableId === table.tableId
                                     ? "selected"
                                     : ""
                                 }

@@ -11,3 +11,9 @@ export interface Room {
   roomName: string;
   tables: Table[];
 }
+export interface TableCounts {
+  tableCount: number;
+  totalMinCovers: number;
+  totalMaxCovers: number;
+  onlineStatusCount: number;
+}

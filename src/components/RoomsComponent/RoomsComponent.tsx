@@ -5,7 +5,7 @@ import PrimaryButton from "../Button/PrimaryButton";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import { setSelectedRoom } from "../../features/roomSlice/roomSlice";
+import { setSelectedRoom } from "../../features/floorSlice/floorSlice";
 interface RoomsComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -13,7 +13,7 @@ const RoomsComponent: React.FC<RoomsComponentProps> = ({
   setIsModalVisible,
 }) => {
   const dispatch = useDispatch();
-  const roomList = useSelector((state: RootState) => state.rooms.rooms);
+  const roomList = useSelector((state: RootState) => state.floor.rooms);
   const [rooms, setRooms] = useState<Room[]>(roomList);
   useEffect(() => {
     const roomsData = localStorage.getItem("rooms");
