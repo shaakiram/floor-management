@@ -8,6 +8,8 @@ In the project directory, you can run:
 
 ### `npm i`
 
+to insatll exteral library
+
 ### `npm start`
 
 Runs the app in the development mode.\
