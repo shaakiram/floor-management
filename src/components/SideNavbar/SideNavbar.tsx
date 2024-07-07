@@ -14,7 +14,6 @@ const SideNavbar: React.FC = () => {
   const handleRoomsClick = () => {
     navigate("/");
   };
-  console.log(location.pathname);
   return (
     <div className="SideNavbarStyles">
       <div className="home-icon" onClick={handleHomeClick}>

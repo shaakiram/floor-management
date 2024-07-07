@@ -129,9 +129,7 @@ const TableDetailsComponent: React.FC = () => {
           variant="outlined"
           className="button-save"
           onClick={() => {
-            if (selectedRoom) {
-              dispatch(updateTableDetails(selectedRoom.tables));
-            }
+              dispatch(updateTableDetails());
           }}
         >
           Save Table

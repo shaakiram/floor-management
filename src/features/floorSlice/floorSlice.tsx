@@ -15,7 +15,7 @@ const loadRoomsFromLocalStorage = (): Room[] => {
   }
   return [];
 };
-interface RoomsState {
+export interface RoomsState {
   rooms: Room[];
   selectedRoom: Room | null;
   selectedTable: Table | null;
@@ -93,9 +93,9 @@ const floorSlice = createSlice({
         state.selectedTable.maxCovers = action.payload;
       }
     },
-    updateTableDetails(state, action: PayloadAction<Table[]>) {
+    updateTableDetails(state) {
       if (state.selectedTable && state.selectedRoom) {
-        const updatedTables = action.payload.map((table) =>
+        const updatedTables = state.selectedRoom.tables.map((table) =>
           table.tableId === state.selectedTable?.tableId
             ? state.selectedTable
             : table
