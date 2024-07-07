@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Room, Table } from "../../types/types";
 import { v4 as uuidv4 } from "uuid";
+import { tables } from "../../data/tables";
 const loadRoomsFromLocalStorage = (): Room[] => {
   const storedRooms = localStorage.getItem("rooms");
   if (storedRooms) {
@@ -19,12 +20,16 @@ export interface RoomsState {
   rooms: Room[];
   selectedRoom: Room | null;
   selectedTable: Table | null;
+  selectedTableLayout: Table | null;
+  tableLayout: Table[];
 }
 
 const initialState: RoomsState = {
   rooms: loadRoomsFromLocalStorage(),
   selectedRoom: null,
   selectedTable: null,
+  selectedTableLayout: null,
+  tableLayout: tables,
 };
 
 const floorSlice = createSlice({
@@ -62,6 +67,7 @@ const floorSlice = createSlice({
         );
         localStorage.setItem("rooms", JSON.stringify(updatedRooms));
         state.selectedTable = null;
+        state.selectedTableLayout = null;
       }
     },
 
@@ -73,8 +79,70 @@ const floorSlice = createSlice({
       if (state.selectedRoom && state.selectedRoom.roomId === action.payload) {
         state.selectedRoom = null;
         state.selectedTable = null;
+        state.selectedTableLayout = null;
       }
       localStorage.setItem("rooms", JSON.stringify(state.rooms));
+    },
+
+    //Table Layout reducers
+    setSelectedTableLayout(state, action: PayloadAction<Table | null>) {
+      state.selectedTableLayout = action.payload;
+    },
+    //add new table layout
+    addTableLayout(state, action: PayloadAction<Table>) {
+      state.tableLayout.push(action.payload);
+    },
+    //add new table layout
+    removeTableLayout(state, action: PayloadAction<number>) {
+      state.tableLayout.splice(action.payload, 1);
+    },
+    //update selected tables layout online status
+    setOnlineStateTableLayout(state, action: PayloadAction<boolean>) {
+      if (state.selectedTableLayout) {
+        state.selectedTableLayout.onlineStatus = action.payload;
+        const updatedTables = state.tableLayout.map((table) =>
+          table.tableId === state.selectedTableLayout?.tableId
+            ? state.selectedTableLayout
+            : table
+        );
+        state.tableLayout = updatedTables;
+      }
+    },
+    //update selected tables layout table name
+    setSelectedTableNameTableLayout(state, action: PayloadAction<string>) {
+      if (state.selectedTableLayout) {
+        state.selectedTableLayout.tableName = action.payload;
+        const updatedTables = state.tableLayout.map((table) =>
+          table.tableId === state.selectedTableLayout?.tableId
+            ? state.selectedTableLayout
+            : table
+        );
+        state.tableLayout = updatedTables;
+      }
+    },
+    //update selected tables lauoyt min covers
+    setSelectedMincoversTableLayout(state, action: PayloadAction<number>) {
+      if (state.selectedTableLayout) {
+        state.selectedTableLayout.minCovers = action.payload;
+        const updatedTables = state.tableLayout.map((table) =>
+          table.tableId === state.selectedTableLayout?.tableId
+            ? state.selectedTableLayout
+            : table
+        );
+        state.tableLayout = updatedTables;
+      }
+    },
+    //update selected tables layout max covers
+    setSelectedMaxcoversTableLayout(state, action: PayloadAction<number>) {
+      if (state.selectedTableLayout) {
+        state.selectedTableLayout.maxCovers = action.payload;
+        const updatedTables = state.tableLayout.map((table) =>
+          table.tableId === state.selectedTableLayout?.tableId
+            ? state.selectedTableLayout
+            : table
+        );
+        state.tableLayout = updatedTables;
+      }
     },
 
     //Table reducers
@@ -124,6 +192,7 @@ const floorSlice = createSlice({
           (table) => table.tableId !== state.selectedTable?.tableId
         );
         state.selectedTable = null;
+        state.selectedTableLayout = null;
         const roomsList = JSON.parse(localStorage.getItem("rooms") || "[]");
         const updatedRooms = roomsList.map((room: Room) =>
           room.roomId === state.selectedRoom?.roomId ? state.selectedRoom : room
@@ -180,5 +249,12 @@ export const {
   duplicateSelectedTable,
   deleteRoom,
   rotateTable,
+  setSelectedTableLayout,
+  setOnlineStateTableLayout,
+  setSelectedMaxcoversTableLayout,
+  setSelectedMincoversTableLayout,
+  setSelectedTableNameTableLayout,
+  addTableLayout,
+  removeTableLayout,
 } = floorSlice.actions;
 export default floorSlice.reducer;

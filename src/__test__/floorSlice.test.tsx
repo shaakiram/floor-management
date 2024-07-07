@@ -37,6 +37,8 @@ describe("floorSlice reducer", () => {
     rooms: [],
     selectedRoom: null,
     selectedTable: null,
+    selectedTableLayout: null,
+    tableLayout: [],
   };
 
   it("should return the initial state", () => {
@@ -58,6 +60,8 @@ describe("floorSlice reducer", () => {
       rooms: [{ roomId: "1", roomName: "Room 1", tables: [] }],
       selectedRoom: null,
       selectedTable: null,
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const nextState = reducer(state, deleteRoom("1"));
     expect(nextState.rooms).toEqual([]);
@@ -115,6 +119,8 @@ describe("floorSlice reducer", () => {
         rotation: 0,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const updatedTables: Table[] = [
       {
@@ -164,6 +170,8 @@ describe("floorSlice reducer", () => {
       rooms: [newRoom],
       selectedRoom: newRoom,
       selectedTable: null,
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const updatedTables: Table[] = [
       {
@@ -202,6 +210,8 @@ describe("floorSlice reducer", () => {
         rotation: 0,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const nextState = reducer(state, setOnlineState(true));
     expect(nextState.selectedTable?.onlineStatus).toEqual(true);
@@ -220,6 +230,8 @@ describe("floorSlice reducer", () => {
         rotation: 0,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const nextState = reducer(state, setSelectedTableName("New Table Name"));
     expect(nextState.selectedTable?.tableName).toEqual("New Table Name");
@@ -238,6 +250,8 @@ describe("floorSlice reducer", () => {
         rotation: 0,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const nextState = reducer(state, setSelectedMincovers(2));
     expect(nextState.selectedTable?.minCovers).toEqual(2);
@@ -256,6 +270,8 @@ describe("floorSlice reducer", () => {
         rotation: 0,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const nextState = reducer(state, setSelectedMaxcovers(5));
     expect(nextState.selectedTable?.maxCovers).toEqual(5);
@@ -297,6 +313,8 @@ describe("floorSlice reducer", () => {
         rotation: 90,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
 
     const updatedTables: Table[] = [
@@ -351,6 +369,8 @@ describe("floorSlice reducer", () => {
         rotation: 0,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const nextState = reducer(state, deleteSelectedTable());
     expect(nextState.selectedRoom?.tables).toEqual([]);
@@ -388,6 +408,8 @@ describe("floorSlice reducer", () => {
         rotation: 0,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const nextState = reducer(state, duplicateSelectedTable());
     expect(nextState.selectedRoom?.tables.length).toEqual(2);
@@ -425,6 +447,8 @@ describe("floorSlice reducer", () => {
         rotation: 0,
         tableType: "ROUND",
       },
+      selectedTableLayout: null,
+      tableLayout: [],
     };
     const updatedTables: Table[] = [
       {

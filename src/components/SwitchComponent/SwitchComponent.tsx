@@ -9,7 +9,10 @@ import { makeStyles } from "@material-ui/styles";
 //store
 import { RootState } from "../../store";
 //reducer
-import { setOnlineState } from "../../features/floorSlice/floorSlice";
+import {
+  setOnlineState,
+  setOnlineStateTableLayout,
+} from "../../features/floorSlice/floorSlice";
 
 const IOSSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -73,6 +76,9 @@ const SwitchComponent: React.FC = () => {
   const selectedTable = useSelector(
     (state: RootState) => state.floor.selectedTable
   );
+  const selectedTableLayout = useSelector(
+    (state: RootState) => state.floor.selectedTableLayout
+  );
   const classes = useStyles();
   return (
     <FormControlLabel
@@ -81,15 +87,38 @@ const SwitchComponent: React.FC = () => {
           sx={{ m: 1 }}
           defaultChecked={false}
           onChange={() => {
-            dispatch(setOnlineState(!selectedTable?.onlineStatus));
+            if (selectedTableLayout) {
+              dispatch(
+                setOnlineStateTableLayout(!selectedTableLayout.onlineStatus)
+              );
+            }
+            if (selectedTable) {
+              dispatch(setOnlineState(!selectedTable?.onlineStatus));
+            }
           }}
-          checked={selectedTable?.onlineStatus}
+          checked={
+            selectedTableLayout
+              ? selectedTableLayout.onlineStatus
+              : selectedTable?.onlineStatus
+          }
         />
       }
-      label={selectedTable?.onlineStatus ? "Active" : "Inactive"}
+      label={
+        selectedTableLayout
+          ? selectedTableLayout?.onlineStatus
+            ? "Active"
+            : "Inactive"
+          : selectedTable?.onlineStatus
+          ? "Active"
+          : "Inactive"
+      }
       labelPlacement="start"
       className={
-        selectedTable?.onlineStatus
+        selectedTableLayout
+          ? selectedTableLayout?.onlineStatus
+            ? classes.labelActive
+            : classes.labelInactive
+          : selectedTable?.onlineStatus
           ? classes.labelActive
           : classes.labelInactive
       }

@@ -14,8 +14,11 @@ import { RootState } from "../../../store";
 //reducer
 import {
   setSelectedMaxcovers,
+  setSelectedMaxcoversTableLayout,
   setSelectedMincovers,
+  setSelectedMincoversTableLayout,
   setSelectedTableName,
+  setSelectedTableNameTableLayout,
   updateTableDetails,
 } from "../../../features/floorSlice/floorSlice";
 //input field styles
@@ -52,6 +55,9 @@ const TableDetailsComponent: React.FC<TableDetailsComponentProps> = ({
   const selectedTable = useSelector(
     (state: RootState) => state.floor.selectedTable
   );
+  const selectedTableLayout = useSelector(
+    (state: RootState) => state.floor.selectedTableLayout
+  );
   return (
     <React.Fragment>
       <div className="table-details">
@@ -63,9 +69,18 @@ const TableDetailsComponent: React.FC<TableDetailsComponentProps> = ({
               <TextField
                 className={classes.root}
                 size="small"
-                value={selectedTable?.tableName}
+                value={
+                  selectedTableLayout
+                    ? selectedTableLayout.tableName
+                    : selectedTable?.tableName
+                }
                 onChange={(e) => {
-                  dispatch(setSelectedTableName(e.target.value));
+                  if (selectedTable) {
+                    dispatch(setSelectedTableName(e.target.value));
+                  }
+                  if (selectedTableLayout) {
+                    dispatch(setSelectedTableNameTableLayout(e.target.value));
+                  }
                 }}
               />
             </div>
@@ -75,9 +90,18 @@ const TableDetailsComponent: React.FC<TableDetailsComponentProps> = ({
             <div className="label">Min Covers</div>
             <div className="input">
               <NumberInput
-                value={selectedTable?.minCovers}
+                value={
+                  selectedTableLayout
+                    ? selectedTableLayout.minCovers
+                    : selectedTable?.minCovers
+                }
                 onChange={(e, val) => {
-                  dispatch(setSelectedMincovers(val || 0));
+                  if (selectedTable) {
+                    dispatch(setSelectedMincovers(val || 0));
+                  }
+                  if (selectedTableLayout) {
+                    dispatch(setSelectedMincoversTableLayout(val || 0));
+                  }
                 }}
               />
             </div>
@@ -86,9 +110,18 @@ const TableDetailsComponent: React.FC<TableDetailsComponentProps> = ({
             <div className="label">Max Covers</div>
             <div className="input">
               <NumberInput
-                value={selectedTable?.maxCovers}
+                value={
+                  selectedTableLayout
+                    ? selectedTableLayout.maxCovers
+                    : selectedTable?.maxCovers
+                }
                 onChange={(e, val) => {
-                  dispatch(setSelectedMaxcovers(val || 0));
+                  if (selectedTable) {
+                    dispatch(setSelectedMaxcovers(val || 0));
+                  }
+                  if (selectedTableLayout) {
+                    dispatch(setSelectedMaxcoversTableLayout(val || 0));
+                  }
                 }}
               />
             </div>
@@ -128,19 +161,23 @@ const TableDetailsComponent: React.FC<TableDetailsComponentProps> = ({
           </div>
         )}
       </div>
-      <div className="btn-cont">
-        <Button
-          size="small"
-          variant="outlined"
-          className="button-save"
-          onClick={() => {
-            dispatch(updateTableDetails());
-            setTableSaveSuccess(true);
-          }}
-        >
-          Save Table
-        </Button>
-      </div>
+      {selectedTable && (
+        <div className="btn-cont">
+          <Button
+            size="small"
+            variant="outlined"
+            className="button-save"
+            onClick={() => {
+              if (selectedTable) {
+                dispatch(updateTableDetails());
+                setTableSaveSuccess(true);
+              }
+            }}
+          >
+            Save Table
+          </Button>
+        </div>
+      )}
     </React.Fragment>
   );
 };

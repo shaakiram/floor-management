@@ -21,8 +21,6 @@ import {
 } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 
-//table intial data
-import { tables } from "../../data/tables";
 //types
 import { Table } from "../../types/types";
 //store
@@ -34,6 +32,9 @@ import {
   saveSelectedRoom,
   deleteRoom,
   setSelectedRoom,
+  setSelectedTableLayout,
+  addTableLayout,
+  removeTableLayout,
 } from "../../features/floorSlice/floorSlice";
 
 //scss
@@ -60,7 +61,10 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
   const selectedRoom = useSelector(
     (state: RootState) => state.floor.selectedRoom
   );
-
+  const tables = useSelector((state: RootState) => state.floor.tableLayout);
+  const selectedTableLayout = useSelector(
+    (state: RootState) => state.floor.selectedTableLayout
+  );
   //drage endfunction from dnd
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -85,6 +89,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
     const selectedRoomTables = selectedRoom?.tables
       ? [...selectedRoom.tables]
       : [];
+    console.log(tables, "tables");
     const selectionTables = [...tables];
     let newT: Table = {
       tableId: uuidv4(),
@@ -101,14 +106,15 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
     ) {
       if (selectedRoomTables.length < 15) {
         const add = selectionTables[source.index];
+        console.log(add,"selectedRoom");
         //remove table from drag table container
-        tables.splice(source.index, 1);
+        dispatch(removeTableLayout(source.index));
         //adding table to the room
         selectedRoomTables.splice(destination.index, 0, add);
         //creating new table to table container
         newT.tableType = add.tableType;
         dispatch(setSelectedTable(add));
-        tables.push(newT);
+        dispatch(addTableLayout(newT));
       } else {
         setExceedLimit(true);
       }
@@ -164,6 +170,15 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                                 {...provided.dragHandleProps}
                                 {...provided.draggableProps}
                                 ref={provided.innerRef}
+                                onClick={() => {
+                                  dispatch(setSelectedTable(null));
+                                  dispatch(setSelectedTableLayout(table));
+                                }}
+                                className={
+                                  selectedTableLayout?.tableId === table.tableId
+                                    ? "selected"
+                                    : ""
+                                }
                               />
                             )}
                           </Draggable>
@@ -173,11 +188,9 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                     </div>
                   )}
                 </Droppable>
-                {selectedTable && (
-                  <TableDetailsComponent
-                    setTableSaveSuccess={setTableSaveSuccess}
-                  />
-                )}
+                <TableDetailsComponent
+                  setTableSaveSuccess={setTableSaveSuccess}
+                />
               </div>
             </div>
             <div className="room-component">
@@ -256,6 +269,8 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
                                       : ""
                                   }
                                   onClick={() => {
+                                    console.log(table,"table");
+                                    dispatch(setSelectedTableLayout(null));
                                     dispatch(setSelectedTable(table));
                                   }}
                                   style={{
