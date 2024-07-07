@@ -62,6 +62,7 @@ const useStyles = makeStyles({
     color: "#9d9d9d",
   },
 });
+
 const SwitchComponent: React.FC = () => {
   const dispatch = useDispatch();
   const selectedTable = useSelector(
