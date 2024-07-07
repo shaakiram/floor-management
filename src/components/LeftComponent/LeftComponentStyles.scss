@@ -2,13 +2,26 @@
 .LeftComponentStyles {
   width: 95%;
   max-height: 100%;
-  .header {
+  .header-cont {
     height: 7%;
     background-color: $white;
     border-bottom: 0.063rem solid $gray-border;
     display: flex;
     align-items: center;
-    justify-content: center;
+    .header {
+      width: 34%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header2 {
+        width: 31%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 2%;
+        cursor: pointer;
+      }
   }
   .main-component {
     height: 91%;

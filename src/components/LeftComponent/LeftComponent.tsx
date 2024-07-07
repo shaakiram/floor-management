@@ -4,8 +4,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import sqrTable from "../../assets/icons/Table.svg";
 import rndTable from "../../assets/icons/Mid.svg";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -24,16 +23,18 @@ import {
   setSelectedTable,
   setTablesToSelectedRoom,
   saveSelectedRoom,
+  deleteRoom,
+  setSelectedRoom,
 } from "../../features/floorSlice/floorSlice";
 import TableDetailsComponent from "./TableDetailsComponent/TableDetailsCompoent";
-
+import ActionContainerComponent from "../ActionContainerComponent/ActionContainerComponent";
+import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 interface LeftComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
   const [exceedLimit, setExceedLimit] = useState<boolean>(false);
-
 
   const dispatch = useDispatch();
   const selectedTable = useSelector(
@@ -42,6 +43,7 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
   const selectedRoom = useSelector(
     (state: RootState) => state.floor.selectedRoom
   );
+
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
     if (!destination) {
@@ -93,7 +95,22 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
     <React.Fragment>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="LeftComponentStyles">
-          <div className="header">Floor Managment</div>
+          <div className="header-cont">
+            <div className="header2">
+              <div
+                onClick={() => {
+                  if (selectedRoom) {
+                    dispatch(setSelectedRoom(null));
+                  }
+                }}
+              >
+                <ArrowBackIosNewRoundedIcon />
+              </div>
+            </div>
+            <div className="header">Floor Managment</div>
+            <div className="header2" />
+          </div>
+
           <div className="main-component">
             <div className="table-component">
               <div className="tables-header">
@@ -159,7 +176,16 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
                     >
                       Save Room
                     </Button>
-                    <MoreVertIcon color="disabled" />
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        if (selectedRoom) {
+                          dispatch(deleteRoom(selectedRoom.roomId));
+                        }
+                      }}
+                    >
+                      <DeleteOutlineRoundedIcon color="disabled" />
+                    </div>
                   </Stack>
                 </div>
               </div>
@@ -175,25 +201,32 @@ const LeftComponent: React.FC<LeftComponentProps> = ({ setIsModalVisible }) => {
                         return (
                           <Draggable draggableId={table.tableId} index={index}>
                             {(provided) => (
-                              <img
-                                alt=""
-                                src={
-                                  table.tableType === "SQUARE"
-                                    ? sqrTable
-                                    : rndTable
-                                }
-                                {...provided.dragHandleProps}
-                                {...provided.draggableProps}
-                                ref={provided.innerRef}
-                                className={
-                                  selectedTable?.tableId === table.tableId
-                                    ? "selected"
-                                    : ""
-                                }
-                                onClick={() => {
-                                  dispatch(setSelectedTable(table));
-                                }}
-                              />
+                              <div style={{ position: "relative" }}>
+                                {selectedTable?.tableId === table.tableId && (
+                                  <ActionContainerComponent
+                                    setExceedLimit={setExceedLimit}
+                                  />
+                                )}
+                                <img
+                                  alt=""
+                                  src={
+                                    table.tableType === "SQUARE"
+                                      ? sqrTable
+                                      : rndTable
+                                  }
+                                  {...provided.dragHandleProps}
+                                  {...provided.draggableProps}
+                                  ref={provided.innerRef}
+                                  className={
+                                    selectedTable?.tableId === table.tableId
+                                      ? "selected"
+                                      : ""
+                                  }
+                                  onClick={() => {
+                                    dispatch(setSelectedTable(table));
+                                  }}
+                                />
+                              </div>
                             )}
                           </Draggable>
                         );

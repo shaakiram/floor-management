@@ -1,0 +1,32 @@
+@import "../../colors/color.scss";
+.ActionContainerComponent {
+  position: absolute;
+  width: max-content;
+  height: 2rem;
+  background-color: $white;
+  top: -2.5rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  -moz-box-shadow: 0 0 5px #ccc;
+  -webkit-box-shadow: 0 0 5px #ccc;
+  box-shadow: 0 0 5px #ccc;
+  border-radius: 0.2rem;
+  padding: 0 0.5rem;
+
+  .div {
+    border-right: 1px solid $gray-border;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .div2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
