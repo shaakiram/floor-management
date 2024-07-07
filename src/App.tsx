@@ -1,7 +1,9 @@
 import React from "react";
+//components
 import RoomPage from "./components/Pages/RoomPage";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./components/Pages/HomePage";
+//library
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const App: React.FC = () => {
   return (

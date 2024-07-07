@@ -1,5 +1,6 @@
 import { Table } from "../types/types";
 import { v4 as uuidv4 } from "uuid";
+//defult tables lis in to drag and drop
 export const tables: Table[] = [
   {
     tableId: uuidv4(),

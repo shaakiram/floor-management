@@ -1,11 +1,16 @@
+// Customized switch component for online status
 import * as React from "react";
+//libraries
 import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch, { SwitchProps } from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { setOnlineState } from "../../features/floorSlice/floorSlice";
 import { makeStyles } from "@material-ui/styles";
+//store
+import { RootState } from "../../store";
+//reducer
+import { setOnlineState } from "../../features/floorSlice/floorSlice";
+
 const IOSSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({

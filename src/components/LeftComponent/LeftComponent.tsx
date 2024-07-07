@@ -1,24 +1,33 @@
 import React, { useState } from "react";
-import "./LeftComponentStyles.scss";
+//components
+import TableDetailsComponent from "./TableDetailsComponent/TableDetailsCompoent";
+import ActionContainerComponent from "../ActionContainer/ActionContainerComponent";
+import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
+import AlertComponent from "../AlertComponent/AlertComponent";
+import DialogComponent from "../DialogComponent/DialogComponent";
+import PrimaryButton from "../Button/PrimaryButton";
+//libraries
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import sqrTable from "../../assets/icons/Table.svg";
 import rndTable from "../../assets/icons/Mid.svg";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { tables } from "../../data/tables";
 import {
   DragDropContext,
   Draggable,
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
-import { Table } from "../../types/types";
 import { v4 as uuidv4 } from "uuid";
-import DialogComponent from "../DialogComponent/DialogComponent";
-import PrimaryButton from "../Button/PrimaryButton";
+
+//table intial data
+import { tables } from "../../data/tables";
+//types
+import { Table } from "../../types/types";
+//store
+import { RootState } from "../../store";
+//reducer
 import {
   setSelectedTable,
   setTablesToSelectedRoom,
@@ -26,10 +35,9 @@ import {
   deleteRoom,
   setSelectedRoom,
 } from "../../features/floorSlice/floorSlice";
-import TableDetailsComponent from "./TableDetailsComponent/TableDetailsCompoent";
-import ActionContainerComponent from "../ActionContainer/ActionContainerComponent";
-import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
-import AlertComponent from "../AlertComponent/AlertComponent";
+
+//scss
+import "./LeftComponentStyles.scss";
 interface LeftComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setNavigateFrom: React.Dispatch<React.SetStateAction<string>>;
@@ -39,7 +47,9 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
   setIsModalVisible,
   setNavigateFrom,
 }) => {
+  //state to hanlde modal visibility
   const [exceedLimit, setExceedLimit] = useState<boolean>(false);
+  //state to handle alert visibility
   const [roomSaveSuccess, setRoomSaveSuccess] = useState<boolean>(false);
   const [tableSaveSuccess, setTableSaveSuccess] = useState<boolean>(false);
 
@@ -51,17 +61,21 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
     (state: RootState) => state.floor.selectedRoom
   );
 
+  //drage endfunction from dnd
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
+    //check if there is a dropping destination
     if (!destination) {
       return;
     }
+    //check if dragging tables from rooms and dropping table container
     if (
       source.droppableId === "RoomTables" &&
       destination.droppableId === "NewTable"
     ) {
       return;
     }
+    //check  dragging and dropping place is same
     if (
       source.droppableId === destination.droppableId &&
       source.index === destination.index
@@ -87,8 +101,11 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
     ) {
       if (selectedRoomTables.length < 15) {
         const add = selectionTables[source.index];
+        //remove table from drag table container
         tables.splice(source.index, 1);
+        //adding table to the room
         selectedRoomTables.splice(destination.index, 0, add);
+        //creating new table to table container
         newT.tableType = add.tableType;
         dispatch(setSelectedTable(add));
         tables.push(newT);
@@ -96,7 +113,6 @@ const LeftComponent: React.FC<LeftComponentProps> = ({
         setExceedLimit(true);
       }
     }
-
     dispatch(setTablesToSelectedRoom(selectedRoomTables));
   };
   return (

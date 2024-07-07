@@ -1,15 +1,19 @@
 import React from "react";
-import "./ActionContainerComponentStyles.scss";
+//libraries
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
 import RotateRightRoundedIcon from "@mui/icons-material/RotateRightRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import { useDispatch, useSelector } from "react-redux";
+//store
 import { RootState } from "../../store";
+//reducer
 import {
   deleteSelectedTable,
   duplicateSelectedTable,
   rotateTable,
 } from "../../features/floorSlice/floorSlice";
+//scss
+import "./ActionContainerComponentStyles.scss";
 
 interface ActionContainerComponentProps {
   setExceedLimit: React.Dispatch<React.SetStateAction<boolean>>;

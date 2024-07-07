@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+//libraries
 import Button from "@mui/material/Button";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,6 +10,7 @@ import { Box, Modal } from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 import { makeStyles } from "@material-ui/styles";
 
+//modal box styles
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -21,6 +23,7 @@ const style = {
   pb: 3,
   outline: "none",
 };
+//modal header styles
 const useStyles = makeStyles({
   header: {
     display: "flex",
@@ -30,9 +33,14 @@ const useStyles = makeStyles({
     columnGap: "0.5rem",
   },
 });
+
 const DialogComponent: React.FC = () => {
+  //states
   const [open, setOpen] = useState<boolean>(true);
+
   const classes = useStyles();
+
+  //handle modal visibilty
   const handleClose = () => {
     setOpen(false);
   };

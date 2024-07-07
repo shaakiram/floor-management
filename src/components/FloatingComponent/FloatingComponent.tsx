@@ -1,11 +1,15 @@
 import React from "react";
-import "./FloatingComponentStyles.scss";
+//libraries
 import TableBarOutlinedIcon from "@mui/icons-material/TableBarOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { useSelector } from "react-redux";
+//store
 import { RootState } from "../../store";
+//types
 import { Room, TableCounts } from "../../types/types";
+//scss
+import "./FloatingComponentStyles.scss";
 
 const FloatingComponent: React.FC = () => {
   const selectedRoom = useSelector(

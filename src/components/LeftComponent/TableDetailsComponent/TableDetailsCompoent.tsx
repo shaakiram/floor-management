@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+//libraries
 import TextField from "@mui/material/TextField";
 import NumberInput from "../../NumberInput/NumberInput";
 import SwitchComponent from "../../SwitchComponent/SwitchComponent";
@@ -6,16 +7,18 @@ import Skeleton from "@mui/material/Skeleton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import Button from "@mui/material/Button";
+import { makeStyles } from "@material-ui/styles";
+import { useDispatch, useSelector } from "react-redux";
+//store
+import { RootState } from "../../../store";
+//reducer
 import {
   setSelectedMaxcovers,
   setSelectedMincovers,
   setSelectedTableName,
   updateTableDetails,
 } from "../../../features/floorSlice/floorSlice";
-import { makeStyles } from "@material-ui/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store";
-
+//input field styles
 const useStyles = makeStyles({
   root: {
     // focused color for input with variant='outlined'
@@ -42,6 +45,7 @@ interface TableDetailsComponentProps {
 const TableDetailsComponent: React.FC<TableDetailsComponentProps> = ({
   setTableSaveSuccess,
 }) => {
+  //states
   const [loading, setLoading] = useState<boolean>(false);
   const classes = useStyles();
   const dispatch = useDispatch();

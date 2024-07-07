@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Room } from "../../types/types";
-import "./RoomsComponentStyles.scss";
+//components
 import PrimaryButton from "../Button/PrimaryButton";
+//libraries
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { useSelector, useDispatch } from "react-redux";
+//types
+import { Room } from "../../types/types";
+//store
 import { RootState } from "../../store";
+//reducers
 import { setSelectedRoom } from "../../features/floorSlice/floorSlice";
+//scss
+import "./RoomsComponentStyles.scss";
 interface RoomsComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setNavigateFrom: React.Dispatch<React.SetStateAction<string>>;
@@ -16,8 +22,11 @@ const RoomsComponent: React.FC<RoomsComponentProps> = ({
 }) => {
   const dispatch = useDispatch();
   const roomList = useSelector((state: RootState) => state.floor.rooms);
+  //state to initial rooms
   const [rooms, setRooms] = useState<Room[]>(roomList);
+
   useEffect(() => {
+    //retrieving rooms from local storage and setting to state
     const roomsData = localStorage.getItem("rooms");
     const roomsTep = roomsData ? JSON.parse(roomsData) : [];
     setRooms(roomsTep);

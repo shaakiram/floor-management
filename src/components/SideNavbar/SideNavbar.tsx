@@ -1,8 +1,12 @@
+// Side navbar to navigate between home page and rooms page
 import React from "react";
-import "./SideNavbarStyles.scss";
+//libraries
+import { useNavigate, useLocation } from "react-router-dom";
+//images or icons
 import home from "../../assets/images/home.png";
 import table from "../../assets/images/grid-lines.png";
-import { useNavigate, useLocation } from "react-router-dom";
+//scss
+import "./SideNavbarStyles.scss";
 
 const SideNavbar: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +29,11 @@ const SideNavbar: React.FC = () => {
       </div>
 
       <div className="table-icon" onClick={handleRoomsClick}>
-        <img alt="" src={table}           className={location.pathname === "/" ? "bg" : ""}/>
+        <img
+          alt=""
+          src={table}
+          className={location.pathname === "/" ? "bg" : ""}
+        />
       </div>
     </div>
   );

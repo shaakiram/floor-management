@@ -1,6 +1,8 @@
 import React from "react";
-import "./RoomsComponentStyles.scss";
+//components
 import PrimaryButton from "../Button/PrimaryButton";
+//scss
+import "./RoomsComponentStyles.scss";
 interface EmptyRoomsComponentProps {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setNavigateFrom: React.Dispatch<React.SetStateAction<string>>;

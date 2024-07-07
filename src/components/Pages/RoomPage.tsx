@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+//components
 import SideNavbar from "../SideNavbar/SideNavbar";
 import AddRoomDialogComponent from "../DialogComponent/AddRoomDialogComponent";
 import ContentComponent from "../ContentComponent/ContentComponent";
+//scss
 import "../../AppStyles.scss";
 
 const RoomPage: React.FC = () => {

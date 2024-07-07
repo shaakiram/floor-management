@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+//libraries
 import Alert from "@mui/material/Alert";
 
 interface AlertComponentProps {
@@ -10,8 +11,9 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
   setClose,
 }) => {
   useEffect(() => {
+    //close the alert after 2s
     setTimeout(() => {
-        setClose(false);
+      setClose(false);
     }, 2000);
   }, [setClose]);
   return (

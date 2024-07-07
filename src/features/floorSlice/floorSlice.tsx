@@ -32,21 +32,27 @@ const floorSlice = createSlice({
   initialState,
   reducers: {
     //Room Reducers
+
+    // setrooms to state rooms
     setRooms(state, action: PayloadAction<Room[]>) {
       state.rooms = action.payload;
     },
+    // adding rooms to state rooms and update local storage
     addRoom(state, action: PayloadAction<Room>) {
       state.rooms.push(action.payload);
       localStorage.setItem("rooms", JSON.stringify(state.rooms));
     },
+    // set selected room
     setSelectedRoom(state, action: PayloadAction<Room | null>) {
       state.selectedRoom = action.payload;
     },
+    //assign tables to the selectedroom object tables array
     setTablesToSelectedRoom(state, action: PayloadAction<Table[]>) {
       if (state.selectedRoom) {
         state.selectedRoom.tables = action.payload;
       }
     },
+    //save selectedroom tables and update local storage
     saveSelectedRoom(state, action: PayloadAction<Table[]>) {
       if (state.selectedRoom) {
         state.selectedRoom.tables = action.payload;
@@ -58,6 +64,8 @@ const floorSlice = createSlice({
         state.selectedTable = null;
       }
     },
+
+    //remove rooms from rooms state
     deleteRoom(state, action: PayloadAction<string>) {
       state.rooms = state.rooms.filter(
         (room) => room.roomId !== action.payload
@@ -70,29 +78,35 @@ const floorSlice = createSlice({
     },
 
     //Table reducers
+    //setting selected table to selected table state
     setSelectedTable(state, action: PayloadAction<Table | null>) {
       state.selectedTable = action.payload;
     },
+    //update selected tables online status
     setOnlineState(state, action: PayloadAction<boolean>) {
       if (state.selectedTable) {
         state.selectedTable.onlineStatus = action.payload;
       }
     },
+    //update selected tables table name
     setSelectedTableName(state, action: PayloadAction<string>) {
       if (state.selectedTable) {
         state.selectedTable.tableName = action.payload;
       }
     },
+    //update selected tables min covers
     setSelectedMincovers(state, action: PayloadAction<number>) {
       if (state.selectedTable) {
         state.selectedTable.minCovers = action.payload;
       }
     },
+    //update selected tables max covers
     setSelectedMaxcovers(state, action: PayloadAction<number>) {
       if (state.selectedTable) {
         state.selectedTable.maxCovers = action.payload;
       }
     },
+    //update selected tables details to selected room state
     updateTableDetails(state) {
       if (state.selectedTable && state.selectedRoom) {
         const updatedTables = state.selectedRoom.tables.map((table) =>
@@ -103,6 +117,7 @@ const floorSlice = createSlice({
         state.selectedRoom.tables = updatedTables;
       }
     },
+    //delete table from room and update local storage
     deleteSelectedTable(state) {
       if (state.selectedTable && state.selectedRoom) {
         state.selectedRoom.tables = state.selectedRoom.tables.filter(
@@ -116,6 +131,7 @@ const floorSlice = createSlice({
         localStorage.setItem("rooms", JSON.stringify(updatedRooms));
       }
     },
+    //duplicare the table and create new uuid for table id and adding to the room
     duplicateSelectedTable(state) {
       if (state.selectedTable && state.selectedRoom) {
         const duplicatedTable = { ...state.selectedTable, tableId: uuidv4() };
@@ -127,6 +143,7 @@ const floorSlice = createSlice({
         localStorage.setItem("rooms", JSON.stringify(updatedRooms));
       }
     },
+    //rotating the selected and update the state and local storage
     rotateTable(state, action: PayloadAction<Table[]>) {
       if (state.selectedTable && state.selectedRoom) {
         state.selectedTable.rotation =

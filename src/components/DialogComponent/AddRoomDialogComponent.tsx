@@ -1,15 +1,19 @@
 import React from "react";
+//libraries
 import { Box, Modal, Grid, TextField, Button } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { v4 as uuidv4 } from "uuid";
-import { Room } from "../../types/types";
 import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+//types
+import { Room } from "../../types/types";
+//reducer
 import { addRoom, setSelectedRoom } from "../../features/floorSlice/floorSlice";
 
+//modal box style
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -23,6 +27,7 @@ const style = {
   outline: "none",
 };
 const useStyles = makeStyles({
+    //modal header
   header: {
     display: "flex",
     alignItems: "center",
@@ -44,6 +49,7 @@ const useStyles = makeStyles({
       fontSize: "0.7rem", // Change font size for outlined variant
     },
   },
+  //modal lable
   lable: {
     fontSize: "0.8rem",
     fontWeight: 300,
@@ -52,11 +58,13 @@ const useStyles = makeStyles({
     marginBottom: "1rem",
     borderTop: "1px solid #eaeaea",
   },
+  //error text
   error: {
     fontSize: "0.7rem",
     color: "#e60000",
     marginTop: "0.5rem",
   },
+  //button style
   button: {
     borderRadius: "3px",
     border: "1px solid red",
@@ -82,13 +90,14 @@ const AddRoomDialogComponent: React.FC<AddRoomDialogComponentProps> = ({
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+//hanle modal visibilty
   const handleClose = () => {
     setIsModalVisible(false);
   };
   const initialValues: RoomFormValues = {
     roomName: "",
   };
+  //hanld the form and submit
   const handleSubmit = (values: RoomFormValues) => {
     let room: Room = {
       roomName: values.roomName,
